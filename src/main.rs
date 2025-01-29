@@ -1,5 +1,6 @@
 use bevy::prelude::*;
 
+mod asteroids;
 mod camera;
 mod debug;
 mod movement;

@@ -6,6 +6,7 @@ mod debug;
 mod movement;
 mod spaceship;
 
+use asteroids::AsteroidPlugin;
 use camera::CameraPlugin;
 use debug::DebugPlugin;
 use movement::MovementPlugin;
@@ -18,10 +19,12 @@ fn main() {
             color: Color::default(),
             brightness: 0.75,
         })
+        .add_plugins(AsteroidPlugin)
         .add_plugins(MovementPlugin)
         .add_plugins(SpaceshipPlugin)
         .add_plugins(CameraPlugin)
         .add_plugins(DebugPlugin)
+        // default plugins
         .add_plugins(DefaultPlugins)
         .run();
 }

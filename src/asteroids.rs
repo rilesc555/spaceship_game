@@ -59,7 +59,7 @@ fn spawn_asteroid(
             velocity: Velocity::new(velocity),
             acceleration: Acceleration::new(acceleration),
             model: SceneBundle {
-                scene: asset_server.load("Asteroid.glb#Scene0"),
+                scene: asset_server.load("Planet.glb#Scene0"),
                 transform: Transform::from_translation(translation),
                 ..default()
             },

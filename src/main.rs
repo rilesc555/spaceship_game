@@ -12,6 +12,7 @@ use asset_loader::AssetLoaderPlugin;
 use asteroids::AsteroidPlugin;
 use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use camera::CameraPlugin;
+use collision_detection::CollisionDetectionPlugin;
 use debug::DebugPlugin;
 use movement::MovementPlugin;
 use spaceship::SpaceshipPlugin;
@@ -24,6 +25,7 @@ fn main() {
             brightness: 0.75,
         })
         .add_plugins(AssetLoaderPlugin)
+        .add_plugins(CollisionDetectionPlugin)
         .add_plugins(AsteroidPlugin)
         .add_plugins(MovementPlugin)
         .add_plugins(SpaceshipPlugin)

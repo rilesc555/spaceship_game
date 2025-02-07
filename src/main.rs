@@ -5,6 +5,7 @@ mod asteroids;
 mod camera;
 mod collision_detection;
 mod debug;
+mod despawn;
 mod movement;
 mod spaceship;
 
@@ -14,6 +15,7 @@ use bevy::diagnostic::FrameTimeDiagnosticsPlugin;
 use camera::CameraPlugin;
 use collision_detection::CollisionDetectionPlugin;
 use debug::DebugPlugin;
+use despawn;
 use movement::MovementPlugin;
 use spaceship::SpaceshipPlugin;
 
@@ -30,7 +32,7 @@ fn main() {
         .add_plugins(MovementPlugin)
         .add_plugins(SpaceshipPlugin)
         .add_plugins(CameraPlugin)
-        .add_plugins(DebugPlugin)
+        //.add_plugins(DebugPlugin)
         // default plugins
         .add_plugins(FrameTimeDiagnosticsPlugin)
         .add_plugins(DefaultPlugins)

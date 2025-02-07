@@ -1,3 +1,5 @@
+use crate::asteroids::Asteroid;
+use crate::spaceship::Spaceship;
 use bevy::{
     prelude::*,
     transform,
@@ -9,6 +11,9 @@ pub struct Collider {
     pub radius: f32,
     pub colliding_entities: Vec<Entity>,
 }
+
+#[derive(Component)]
+pub struct DespawnMarker;
 
 impl Collider {
     pub fn new(radius: f32) -> Self {
@@ -51,6 +56,29 @@ fn collision_detection(mut query: Query<(Entity, &GlobalTransform, &mut Collider
             collider
                 .colliding_entities
                 .extend(collisions.iter().copied());
+        }
+    }
+}
+
+fn handle_asteroid_collisions(
+    mut commands: Commands,
+    asteroid_query: Query<(Entity, &Collider), With<Asteroid>>,
+    spaceship_query: Query<Entity, With<Spaceship>>,
+) {
+    for (entity, collider) in asteroid_query.iter() {
+        for &collided_entity in collider.colliding_entities.iter() {
+            if asteroid_query.get(collided_entity).is_ok() {
+                continue;
+            }
+            if let Some(mut entity_cmd) = commands.get_entity(entity) {
+                entity_cmd.insert(DespawnMarker);
+            }
+            if spaceship_query.get(collided_entity).is_ok() {
+                continue;
+            }
+            if let Some(mut entity_cmd) = commands.get_entity(collided_entity) {
+                entity_cmd.insert(DespawnMarker);
+            }
         }
     }
 }

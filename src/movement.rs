@@ -1,8 +1,7 @@
+use crate::collision_detection::Collider;
 use bevy::prelude::*;
 
-use crate::collision_detection::Collider;
-
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct Velocity {
     pub value: Vec3,
 }
@@ -13,7 +12,7 @@ impl Velocity {
     }
 }
 
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct Acceleration {
     pub value: Vec3,
 }

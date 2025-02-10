@@ -1,4 +1,4 @@
-use crate::asteroids::DespawnMarker;
+use crate::collision_detection::DespawnMarker;
 use bevy::prelude::*;
 
 const DESPAWN_DISTANCE: f32 = 100.0;

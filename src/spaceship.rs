@@ -4,6 +4,7 @@ use crate::{
     asset_loader::{AssetLoaderPlugin, SceneAssets},
     collision_detection::Collider,
     movement::{Acceleration, MovingObjectBundle, Velocity},
+    schedule::InGameSet,
 };
 
 const STARTING_TRANSLATION: Vec3 = Vec3::new(0.0, 0.0, -20.0);
@@ -27,7 +28,7 @@ impl Plugin for SpaceshipPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(PostStartup, spawn_spaceship).add_systems(
             Update,
-            (spaceship_movement_controls, spaceship_weapon_controls),
+            (spaceship_movement_controls, spaceship_weapon_controls).in_set(InGameSet::UserInput),
         );
     }
 }

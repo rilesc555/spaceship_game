@@ -1,5 +1,5 @@
-use crate::asteroids::Asteroid;
 use crate::spaceship::Spaceship;
+use crate::{asteroids::Asteroid, schedule::InGameSet};
 use bevy::{
     prelude::*,
     transform,
@@ -28,7 +28,12 @@ pub struct CollisionDetectionPlugin;
 
 impl Plugin for CollisionDetectionPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, collision_detection);
+        app.add_systems(
+            Update,
+            (collision_detection, handle_asteroid_collisions)
+                .chain()
+                .in_set(InGameSet::CollisionDetection),
+        );
     }
 }
 
@@ -69,15 +74,12 @@ fn handle_asteroid_collisions(
         for &collided_entity in collider.colliding_entities.iter() {
             if asteroid_query.get(collided_entity).is_ok() {
                 continue;
-            }
-            if let Some(mut entity_cmd) = commands.get_entity(entity) {
-                entity_cmd.insert(DespawnMarker);
-            }
-            if spaceship_query.get(collided_entity).is_ok() {
+            } else if spaceship_query.get(collided_entity).is_ok() {
+                commands.get_entity(entity).insert(DespawnMarker);
                 continue;
-            }
-            if let Some(mut entity_cmd) = commands.get_entity(collided_entity) {
-                entity_cmd.insert(DespawnMarker);
+            } else {
+                commands.get_entity(entity).insert(DespawnMarker);
+                commands.get_entity(collided_entity).insert(DespawnMarker);
             }
         }
     }

@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::state::GameState;
+
 #[derive(Debug, Hash, PartialEq, Eq, Clone, SystemSet)]
 pub enum InGameSet {
     UserInput,
@@ -20,7 +22,8 @@ impl Plugin for SchedulePlugin {
                 InGameSet::EntityUpdate,
                 InGameSet::CollisionDetection,
             )
-                .chain(),
+                .chain()
+                .run_if(in_state(GameState::InGame)),
         )
         .add_systems(
             Update,
@@ -32,7 +35,7 @@ impl Plugin for SchedulePlugin {
             Update,
             apply_deferred
                 .after(InGameSet::UserInput)
-                .before(InGameSet::CollisionDetection),
+                .before(InGameSet::EntityUpdate),
         );
     }
 }

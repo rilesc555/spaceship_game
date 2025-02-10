@@ -1,7 +1,7 @@
-use bevy::{input::keyboard::KeyboardInput, prelude::*};
+use bevy::prelude::*;
 
 use crate::{
-    asset_loader::{AssetLoaderPlugin, SceneAssets},
+    asset_loader::SceneAssets,
     collision_detection::Collider,
     movement::{Acceleration, MovingObjectBundle, Velocity},
     schedule::InGameSet,
@@ -28,7 +28,9 @@ impl Plugin for SpaceshipPlugin {
     fn build(&self, app: &mut App) {
         app.add_systems(PostStartup, spawn_spaceship).add_systems(
             Update,
-            (spaceship_movement_controls, spaceship_weapon_controls).in_set(InGameSet::UserInput),
+            (spaceship_movement_controls, spaceship_weapon_controls)
+                .chain()
+                .in_set(InGameSet::UserInput),
         );
     }
 }
@@ -54,7 +56,9 @@ fn spaceship_movement_controls(
     keyboard_input: Res<Input<KeyCode>>,
     time: Res<Time>,
 ) {
-    let (mut transform, mut velocity) = query.single_mut();
+    let Ok((mut transform, mut velocity)) = query.get_single_mut() else {
+        return;
+    };
     let mut rotation = 0.0;
     let mut roll = 0.0;
     let mut movement = 0.0;
@@ -89,7 +93,9 @@ fn spaceship_weapon_controls(
     keyboard_input: Res<Input<KeyCode>>,
     scene_assets: Res<SceneAssets>,
 ) {
-    let transform = query.single();
+    let Ok(transform) = query.get_single() else {
+        return;
+    };
     if keyboard_input.pressed(KeyCode::Space) {
         commands.spawn((
             MovingObjectBundle {

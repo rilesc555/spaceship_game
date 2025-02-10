@@ -1,10 +1,6 @@
 use crate::spaceship::Spaceship;
 use crate::{asteroids::Asteroid, schedule::InGameSet};
-use bevy::{
-    prelude::*,
-    transform,
-    utils::{define_label, hashbrown::HashMap},
-};
+use bevy::{prelude::*, utils::hashbrown::HashMap};
 
 #[derive(Component, Debug)]
 pub struct Collider {
@@ -12,7 +8,7 @@ pub struct Collider {
     pub colliding_entities: Vec<Entity>,
 }
 
-#[derive(Component)]
+#[derive(Component, Debug)]
 pub struct DespawnMarker;
 
 impl Collider {

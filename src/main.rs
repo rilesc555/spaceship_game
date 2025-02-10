@@ -6,9 +6,11 @@ mod camera;
 mod collision_detection;
 mod debug;
 mod despawn;
+mod health;
 mod movement;
 mod schedule;
 mod spaceship;
+mod state;
 
 use asset_loader::AssetLoaderPlugin;
 use asteroids::AsteroidPlugin;
@@ -20,6 +22,7 @@ use despawn::DespawnPlugin;
 use movement::MovementPlugin;
 use schedule::SchedulePlugin;
 use spaceship::SpaceshipPlugin;
+use state::StatePlugin;
 
 fn main() {
     App::new()
@@ -28,6 +31,8 @@ fn main() {
             color: Color::default(),
             brightness: 0.75,
         })
+        .add_plugins(SchedulePlugin)
+        .add_plugins(StatePlugin)
         .add_plugins(AssetLoaderPlugin)
         .add_plugins(CollisionDetectionPlugin)
         .add_plugins(AsteroidPlugin)
@@ -39,6 +44,5 @@ fn main() {
         .add_plugins(FrameTimeDiagnosticsPlugin)
         .add_plugins(DefaultPlugins)
         .add_plugins(DespawnPlugin)
-        .add_plugins(SchedulePlugin)
         .run();
 }

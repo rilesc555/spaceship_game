@@ -75,11 +75,10 @@ fn handle_asteroid_collisions(
             if asteroid_query.get(collided_entity).is_ok() {
                 continue;
             } else if spaceship_query.get(collided_entity).is_ok() {
-                commands.get_entity(entity).insert(DespawnMarker);
-                continue;
+                commands.entity(entity).insert(DespawnMarker);
             } else {
-                commands.get_entity(entity).insert(DespawnMarker);
-                commands.get_entity(collided_entity).insert(DespawnMarker);
+                commands.entity(entity).insert(DespawnMarker);
+                commands.entity(collided_entity).insert(DespawnMarker);
             }
         }
     }

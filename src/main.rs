@@ -18,6 +18,7 @@ use collision_detection::CollisionDetectionPlugin;
 use debug::DebugPlugin;
 use despawn::DespawnPlugin;
 use movement::MovementPlugin;
+use schedule::SchedulePlugin;
 use spaceship::SpaceshipPlugin;
 
 fn main() {
@@ -37,5 +38,7 @@ fn main() {
         // default plugins
         .add_plugins(FrameTimeDiagnosticsPlugin)
         .add_plugins(DefaultPlugins)
+        .add_plugins(DespawnPlugin)
+        .add_plugins(SchedulePlugin)
         .run();
 }
